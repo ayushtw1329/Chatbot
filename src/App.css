@@ -109,6 +109,10 @@
  .d-none {
    display: none;
  }
+
+ .cursor-pointer {
+   cursor: pointer;
+ }
  
  .chatMessages {
   display: flex;
