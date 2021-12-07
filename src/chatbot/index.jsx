@@ -35,11 +35,16 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="chatbot">
+    <>
       <Header />
-      <Messages messages={messages} />
-      <Input onSend={onSendMessage} />
-    </div>
+      <main className="wrapper">
+        <Messages messages={messages} />
+        <div className="sep"></div>
+        <div className="chatFooter">
+          <Input onSend={onSendMessage} />
+        </div>
+      </main>
+    </>
   );
 };
 

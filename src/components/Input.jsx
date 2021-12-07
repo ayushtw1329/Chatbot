@@ -1,47 +1,35 @@
 import React, { useState } from "react";
+import micIcon from "../images/mic-icon.svg";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setText(e.target.value);
   };
 
-  const handleSend = e => {
+  const handleSend = (e) => {
     e.preventDefault();
-    if(text && text.length) {
+    if (text && text.length) {
       onSend(text);
       setText("");
     }
   };
 
   return (
-    <div className="input">
-      <form onSubmit={handleSend}>
-        <input
-          type="text"
-          onChange={handleInputChange}
-          value={text}
-          placeholder="Type Message"
-        />
-        <button>
-          <svg
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 500 500"
-          >
-            <g>
-              <g>
-                <polygon points="0,497.25 535.5,267.75 0,38.25 0,216.75 382.5,267.75 0,318.75" />
-              </g>
-            </g>
-          </svg>
-        </button>
-      </form>
-    </div>
+    <form className="input-form" onSubmit={handleSend}>
+      <textarea
+        className="user-input"
+        type="text"
+        onChange={handleInputChange}
+        value={text}
+        placeholder="Type Message"
+      />
+      <button className="speak">
+        <img src={micIcon} alt="Mic Icon" />
+      </button>
+    </form>
   );
-}
+};
 
-export default Input; 
+export default Input;
