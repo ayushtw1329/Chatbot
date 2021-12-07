@@ -1,12 +1,15 @@
 import React, { useState, useRef } from "react";
 import micIcon from "../images/mic-icon.svg";
+import defaultMicIcon from "../images/default_mic.svg";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
-  const [, setRecordedAudio] = useState("");
+  const [recordedAudio, setRecordedAudio] = useState("");
   const [gumStream, setGumStream] = useState();
   const [showStopRecordingIcon, setShowStopRecordingIcon] = useState(false);
   const [showStartRecordingIcon, setShowStartRecordingIcon] = useState(true);
+  const audioEl = useRef();
+  const audio = audioEl.current;
   const mediaRecorder = useRef();
   let chunks = [];
 
@@ -86,12 +89,12 @@ const Input = ({ onSend }) => {
       </form>
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecordAudio}>
-          <img src={micIcon} alt="Mic Icon" />
+          <img src={defaultMicIcon} alt="Mic Icon" height="36" />
         </button>
       )}
       {showStopRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStopRecording}>
-          <img src={micIcon} alt="Mic Icon" />
+          <img src={micIcon} alt="Mic Icon" height="36" />
         </button>
       )}
     </>
