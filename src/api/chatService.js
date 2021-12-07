@@ -14,7 +14,7 @@ const handleRequest = (message) => {
     (message && message.toLowerCase() === "hi") ||
     message.toLowerCase() === "hello"
   )
-    return "Hi Lily, Welcome to Pizzazza!";
+    return "Welcome to Pizzazza!";
   if (message === "help") return "How may i help you";
   if (message === "Show me the dominoes menu")
     return {

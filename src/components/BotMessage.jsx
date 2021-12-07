@@ -63,7 +63,7 @@ export default function BotMessage({ fetchMessage }) {
           </button>
         </div>
       ) : (
-        <> {isLoading ? "..." : message}</>
+        <> {isLoading ? <div className="dot-elastic"></div> : message} </>
       )}
     </div>
   );

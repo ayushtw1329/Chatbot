@@ -3,12 +3,10 @@ import micIcon from "../images/mic-icon.svg";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
-  const [recordedAudio, setRecordedAudio] = useState("");
+  const [, setRecordedAudio] = useState("");
   const [gumStream, setGumStream] = useState();
   const [showStopRecordingIcon, setShowStopRecordingIcon] = useState(false);
   const [showStartRecordingIcon, setShowStartRecordingIcon] = useState(true);
-  const audioEl = useRef();
-  const audio = audioEl.current;
   const mediaRecorder = useRef();
   let chunks = [];
 
@@ -58,16 +56,6 @@ const Input = ({ onSend }) => {
     chunks = [];
     const audioURL = URL.createObjectURL(blob);
     setRecordedAudio(audioURL);
-    audio.onloadedmetadata = async () => {
-      if (audio.duration === Infinity) {
-        audio.currentTime = 1e101;
-        audio.ontimeupdate = () => {
-          audio.ontimeupdate = () => {};
-          audio.currentTime = 0.1;
-          audio.currentTime = 0;
-        };
-      }
-    };
   };
 
   const onStopRecording = () => {
@@ -88,13 +76,13 @@ const Input = ({ onSend }) => {
           placeholder="Type Message"
         />
         {/* <audio
-        ref={audioEl}
-        data-testid="boloAudioElement"
-        controls
-        className="d-flex shadow-grey rounded-24"
-        tabIndex={-1}
-        src={recordedAudio}
-      ></audio> */}
+          ref={audioEl}
+          data-testid="boloAudioElement"
+          controls
+          className="d-flex shadow-grey rounded-24"
+          tabIndex={-1}
+          src={recordedAudio}
+        ></audio> */}
       </form>
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecordAudio}>
