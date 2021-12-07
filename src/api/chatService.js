@@ -10,9 +10,18 @@ const chatService = {
 };
 
 const handleRequest = (message) => {
-  if (message === "hi") return "Welcome to dominoes!";
+  if (
+    (message && message.toLowerCase() === "hi") ||
+    message.toLowerCase() === "hello"
+  )
+    return "Hi Lily, Welcome to Pizzazza!";
   if (message === "help") return "How may i help you";
-  else return "dominoes:- " + message;
+  if (message === "Show me the dominoes menu")
+    return {
+      type: "image",
+      isMenu: true,
+    };
+  else return "Sorry! I didn't understand";
 };
 
 export default chatService;

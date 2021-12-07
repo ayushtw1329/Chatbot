@@ -18,7 +18,7 @@ const Input = ({ onSend }) => {
 
   return (
     <form className="input-form" onSubmit={handleSend}>
-      <textarea
+      <input
         className="user-input"
         type="text"
         onChange={handleInputChange}

@@ -105,12 +105,17 @@
  .user-icon {
   right: 0;
  }
+
+ .d-none {
+   display: none;
+ }
  
  .chatMessages {
   display: flex;
   flex-direction: column;
   padding: 25px 20px;
   flex: 1;
+  height: 450px;
  }
  
  .message {
