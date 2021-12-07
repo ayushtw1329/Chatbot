@@ -19,7 +19,6 @@ export default function Messages({ messages }) {
       <span className="user-icon">
         <img src={userIcon} alt="User Icon" />
       </span>
-      <div className="messages"></div>
     </div>
   );
 }

@@ -78,14 +78,24 @@ const Input = ({ onSend }) => {
   };
 
   return (
-    <form className="input-form" onSubmit={handleSend}>
-      <input
-        className="user-input"
-        type="text"
-        onChange={handleInputChange}
-        value={text}
-        placeholder="Type Message"
-      />
+    <>
+      <form className="input-form" onSubmit={handleSend}>
+        <input
+          className="user-input"
+          type="text"
+          onChange={handleInputChange}
+          value={text}
+          placeholder="Type Message"
+        />
+        {/* <audio
+        ref={audioEl}
+        data-testid="boloAudioElement"
+        controls
+        className="d-flex shadow-grey rounded-24"
+        tabIndex={-1}
+        src={recordedAudio}
+      ></audio> */}
+      </form>
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecordAudio}>
           <img src={micIcon} alt="Mic Icon" />
@@ -96,15 +106,7 @@ const Input = ({ onSend }) => {
           <img src={micIcon} alt="Mic Icon" />
         </button>
       )}
-      <audio
-        ref={audioEl}
-        data-testid="boloAudioElement"
-        controls
-        className="d-flex shadow-grey rounded-24"
-        tabIndex={-1}
-        src={recordedAudio}
-      ></audio>
-    </form>
+    </>
   );
 };
 
