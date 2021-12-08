@@ -24,4 +24,25 @@ const handleRequest = (message) => {
   else return "Sorry! I didn't understand";
 };
 
+export const getTextFromAudio = async (audioString) => {
+  try {
+    const res = await fetch("https://inference.vakyansh.in/alt/asr/en", {
+      method: "POST",
+      cors: "no-cors",
+      body: JSON.stringify({
+        audio: [
+          {
+            audioContent: audioString,
+          },
+        ],
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
 export default chatService;

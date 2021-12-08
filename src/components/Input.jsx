@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import activeMicIcon from "../images/mic-icon.svg";
 import defaultMicIcon from "../images/default_mic.svg";
 import RecordRTC, { StereoAudioRecorder } from "recordrtc";
+import { getTextFromAudio } from "../api/chatService";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
@@ -35,7 +36,7 @@ const Input = ({ onSend }) => {
         desiredSampRate: 10000,
         bitsPerSecond: 128000,
         numberOfAudioChannels: 1,
-        disableLogs: false,
+        disableLogs: true,
       });
       recorderRef.current.startRecording();
     } catch (error) {
@@ -71,19 +72,7 @@ const Input = ({ onSend }) => {
     const base64 = await blobToBase64(blob);
     const splittedValue = base64.split(",")[1];
     try {
-      const res = await fetch("https://inference.vakyansh.in/alt/asr/en", {
-        method: "POST",
-        cors: "no-cors",
-        body: JSON.stringify({
-          audio: [
-            {
-              audioContent: splittedValue,
-            },
-          ],
-        }),
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
+      const data = await getTextFromAudio(splittedValue);
       if (data && data.output && data.output.length) {
         setText(data.output[0].source);
       }
