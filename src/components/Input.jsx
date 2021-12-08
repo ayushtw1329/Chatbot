@@ -1,17 +1,14 @@
 import React, { useState, useRef } from "react";
-import micIcon from "../images/mic-icon.svg";
+import activeMicIcon from "../images/mic-icon.svg";
 import defaultMicIcon from "../images/default_mic.svg";
+import RecordRTC, { StereoAudioRecorder } from "recordrtc";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
   const [recordedAudio, setRecordedAudio] = useState("");
-  const [gumStream, setGumStream] = useState();
   const [showStopRecordingIcon, setShowStopRecordingIcon] = useState(false);
   const [showStartRecordingIcon, setShowStartRecordingIcon] = useState(true);
-  const audioEl = useRef();
-  const audio = audioEl.current;
-  const mediaRecorder = useRef();
-  let chunks = [];
+  const recorderRef = useRef();
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -27,24 +24,22 @@ const Input = ({ onSend }) => {
 
   const recordAudio = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setGumStream(stream);
-      /* Create the Recorder object and configure to record mono sound (1 channel) Recording 2 channels will double the file size */
-      mediaRecorder.current = new MediaRecorder(stream);
-
-      //start the recording process
-      mediaRecorder.current.start();
-
-      //automatically click stop button after 20 seconds
-      mediaRecorder.current.ondataavailable = (e) => {
-        chunks.push(e?.data);
-      };
-
-      mediaRecorder.current.onstop = () => {
-        onRecordingStop();
-      };
-    } catch (e) {
-      console.log("EError", e);
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: true,
+      });
+      recorderRef.current = new RecordRTC(mediaStream, {
+        type: "audio",
+        recorderType: StereoAudioRecorder,
+        bufferSize: 256,
+        desiredSampRate: 10000,
+        bitsPerSecond: 128000,
+        numberOfAudioChannels: 1,
+        disableLogs: false,
+      });
+      recorderRef.current.startRecording();
+    } catch (error) {
+      console.log((error, "Error"));
     }
   };
 
@@ -54,18 +49,47 @@ const Input = ({ onSend }) => {
     recordAudio();
   };
 
-  const onRecordingStop = async () => {
-    const blob = new Blob(chunks, { type: "audio/wav" });
-    chunks = [];
-    const audioURL = URL.createObjectURL(blob);
-    setRecordedAudio(audioURL);
-  };
-
   const onStopRecording = () => {
     setShowStopRecordingIcon(false);
     setShowStartRecordingIcon(true);
-    mediaRecorder?.current?.stop();
-    gumStream?.getAudioTracks()[0].stop();
+    recorderRef.current.stopRecording(() => {
+      const audioURL = URL.createObjectURL(recorderRef.current.getBlob());
+      setRecordedAudio(audioURL);
+      getAudioText(recorderRef.current.getBlob());
+    });
+  };
+
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const getAudioText = async (blob) => {
+    const base64 = await blobToBase64(blob);
+    const splittedValue = base64.split(",")[1];
+    try {
+      const res = await fetch("https://inference.vakyansh.in/alt/asr/en", {
+        method: "POST",
+        cors: "no-cors",
+        body: JSON.stringify({
+          audio: [
+            {
+              audioContent: splittedValue,
+            },
+          ],
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data && data.output && data.output.length) {
+        setText(data.output[0].source);
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   return (
@@ -78,21 +102,20 @@ const Input = ({ onSend }) => {
           value={text}
           placeholder="Type Message"
         />
-        {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-        <iframe
-          className="d-none"
+        {/* <iframe
           src={recordedAudio}
           allow="autoplay"
-        ></iframe>
+          title="recordedAudio"
+        ></iframe> */}
       </form>
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecordAudio}>
-          <img src={defaultMicIcon} alt="Mic Icon" height="36" />
+          <img src={defaultMicIcon} alt="Mic Icon" height="30" />
         </button>
       )}
       {showStopRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStopRecording}>
-          <img src={micIcon} alt="Mic Icon" height="36" />
+          <img src={activeMicIcon} alt="Mic Icon" height="30" />
         </button>
       )}
     </>
