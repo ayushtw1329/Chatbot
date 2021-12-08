@@ -78,14 +78,12 @@ const Input = ({ onSend }) => {
           value={text}
           placeholder="Type Message"
         />
-        {/* <audio
-          ref={audioEl}
-          data-testid="boloAudioElement"
-          controls
-          className="d-flex shadow-grey rounded-24"
-          tabIndex={-1}
+        {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+        <iframe
+          className="d-none"
           src={recordedAudio}
-        ></audio> */}
+          allow="autoplay"
+        ></iframe>
       </form>
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecordAudio}>
