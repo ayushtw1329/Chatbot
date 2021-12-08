@@ -16,7 +16,7 @@ const handleRequest = (message) => {
   )
     return "Welcome to Pizzazza!";
   if (message === "help") return "How may i help you";
-  if (message === "Show me the dominoes menu")
+  if (message === "Show me the dominos menu")
     return {
       type: "image",
       isMenu: true,
