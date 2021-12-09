@@ -15,17 +15,16 @@ app.post("/chatbot", jsonParser, urlEncoded, function (req, res, next) {
   const message = req.body.message;
   console.log('inside server');
   
-  // talkToChatbot(message)
-  //   .then((response) => {
-  //     res.send({ message: response });
-  //   })
-  //   .catch((error) => {
-  //     console.log("Something went wrong: " + error);
-  //     res.send({
-  //       error: "Error occured here",
-  //     });
-  //   });
-  res.send({message: message})
+  talkToChatbot(message)
+    .then((response) => {
+      res.send({ message: response });
+    })
+    .catch((error) => {
+      console.log("Something went wrong: " + error);
+      res.send({
+        error: "Error occured here",
+      });
+    });
 });
 
 const port = process.env.PORT || 3000;

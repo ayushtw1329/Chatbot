@@ -6,7 +6,7 @@ require("dotenv").config();
 const projectId = process.env.PROJECT_ID;
 const configuration = {
   credentials: {
-    private_key: process.env.PRIVATE_KEY,
+    private_key: Buffer.from(process.env.PRIVATE_KEY , 'base64').toString('ascii'),
     client_email: process.env.CLIENT_EMAIL,
   },
 };
@@ -16,13 +16,14 @@ const sessionClient = new dialogflow.SessionsClient(configuration);
 const sessionPath = sessionClient.projectAgentSessionPath(projectId, uuid());
 
 async function talkToChatbot(message: string) {
-  console.log("message " + message);
+  const languageCode = "en-US";
   
   const botRequest = {
     session: sessionPath,
     queryInput: {
       text: {
         text: message,
+        languageCode
       },
     },
   };
@@ -31,7 +32,7 @@ async function talkToChatbot(message: string) {
     .detectIntent(botRequest)
     .then((responses) => {
       console.log(JSON.stringify(responses));
-      const requiredResponse = responses[0].queryResult;
+      const requiredResponse = responses[0].queryResult.fulfillmentMessages[0].text;
       return requiredResponse;
     })
     .catch((error) => {
