@@ -6,7 +6,6 @@ import Messages from "../components/Messages";
 import Input from "../components/Input";
 
 import Header from "../components/Header";
-import chatService from "../api/chatService";
 import { getBotResponse } from "../api/chatService";
 
 const Chatbot = () => {
@@ -17,7 +16,7 @@ const Chatbot = () => {
       setMessages([
         <BotMessage
           key="0"
-          fetchMessage={async () => await chatService.getChatbotResponse("hi")}
+          fetchMessage={async () => await getBotResponse("hi")}
         />,
       ]);
     }

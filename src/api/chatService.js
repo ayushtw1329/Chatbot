@@ -51,12 +51,13 @@ export const getBotResponse = async (text) => {
       method: "POST",
       cors: "no-cors",
       body: JSON.stringify({
-        message: 'hello',
+        message: text,
       }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    return data;
+    const messageType = handleRequest(data.message);
+    return messageType;
   } catch (error) {
     console.log("Error", error);
   }
