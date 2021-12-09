@@ -350,3 +350,64 @@ button {
     transform: scale(1, 1);
   }
 }
+
+.recorder-container .outer {
+  width: 2rem;
+  height: 2rem;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  border-radius: 100%;
+  position: absolute;
+  background-color: transparent;
+  border: 1px solid green;
+  z-index: -1;
+  transition: 1.5s all ease;
+  -webkit-animation: woong 1.5s infinite;
+  animation: woong 1.5s infinite;
+  margin-left: 29px;
+  margin-top: 7px;
+}
+
+.recorder-container .outer-2 {
+  width: 2rem;
+  height: 2rem;
+  transform: scale(1);
+  margin-left: 30px;
+  border-radius: 100%;
+  margin-top: 8px;
+  position: absolute;
+  background-color: green;
+  z-index: -1;
+  transition: 1.5s all ease;
+  animation: woong-2 1.5s infinite;
+  animation-delay: 2.5s;
+}
+
+@keyframes woong {
+  0% {
+    -webkit-trasform: scale(1.2);
+  }
+  50% {
+    -webkit-transform: scale(1.8);
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes woong-2 {
+  0% {
+    -webkit-transform: scale(1.2);
+    opacity: 0.6;
+  }
+  50% {
+    -webkit-transform: scale(1.6);
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: scale(2);
+    opacity: 0;
+  }
+}

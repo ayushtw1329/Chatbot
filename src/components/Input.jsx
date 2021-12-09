@@ -97,15 +97,20 @@ const Input = ({ onSend }) => {
           title="audio"
         ></iframe> */}
       </form>
+
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecordAudio}>
           <img src={defaultMicIcon} alt="Mic Icon" height="30" />
         </button>
       )}
       {showStopRecordingIcon && (
-        <button className="speak cursor-pointer" onClick={onStopRecording}>
-          <img src={activeMicIcon} alt="Mic Icon" height="30" />
-        </button>
+        <div className="recorder-container ml-auto align-middle">
+          <div className="outer"></div>
+          <div className="outer-2"></div>
+          <button className="speak cursor-pointer" onClick={onStopRecording}>
+            <img src={activeMicIcon} alt="Mic Icon" height="30" />
+          </button>
+        </div>
       )}
     </>
   );
