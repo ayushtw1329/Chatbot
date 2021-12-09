@@ -56,8 +56,10 @@ export const getBotResponse = async (text) => {
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    const messageType = handleRequest(data.message);
-    return messageType;
+    // const messageType = handleRequest(data.message);
+    if (data.message && data.message.text && data.message.text.length) {
+      return data.message.text[0];
+    }
   } catch (error) {
     console.log("Error", error);
   }

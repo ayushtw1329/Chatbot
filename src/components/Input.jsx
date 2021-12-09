@@ -91,11 +91,7 @@ const Input = ({ onSend }) => {
           value={text}
           placeholder="Type Message"
         />
-        {/* <iframe
-          src={recordedAudio}
-          allow="autoplay"
-          title="audio"
-        ></iframe> */}
+        {/* <iframe src={recordedAudio} allow="autoplay" title="audio"></iframe> */}
       </form>
 
       {showStartRecordingIcon && (
