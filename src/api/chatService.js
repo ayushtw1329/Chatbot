@@ -45,4 +45,21 @@ export const getTextFromAudio = async (audioString) => {
   }
 };
 
+export const getBotResponse = async (text) => {
+  try {
+    const res = await fetch("http://localhost:3000/chatbot", {
+      method: "POST",
+      cors: "no-cors",
+      body: JSON.stringify({
+        message: 'hello',
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
 export default chatService;
