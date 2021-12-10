@@ -4,9 +4,9 @@ import menu from "../images/menu.svg";
 import expandIcon from "../images/expand.svg";
 import ImageViewer from "react-simple-image-viewer";
 
-export default function BotMessage({ fetchMessage }) {
+export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
   const [isLoading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState();
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
@@ -35,38 +35,84 @@ export default function BotMessage({ fetchMessage }) {
 
   return (
     <div className="message bot-message">
-      {message.isMenu ? (
-        <div className="menu-wrapper">
-          <div className="menu-options">
-            {images.map((src, index) => (
-              <span className="menu-option" key={index}>
+      <>
+        {isLoading ? (
+          <div className="dot-elastic"></div>
+        ) : message && message.label === "IMAGE_URL_LIST" ? (
+          <div className="menu-wrapper">
+            <div className="menu-options">
+              {images.map((src, index) => (
+                <span className="menu-option" key={index}>
+                  <img
+                    src={src}
+                    onClick={() => openImageViewer(index)}
+                    alt="Menu"
+                  />
+                </span>
+              ))}
+              {isViewerOpen && (
+                <ImageViewer
+                  src={images}
+                  currentIndex={currentImage}
+                  onClose={closeImageViewer}
+                  disableScroll={false}
+                  backgroundStyle={{
+                    backgroundColor: "rgba(0,0,0,0.9)",
+                  }}
+                  closeOnClickOutside={true}
+                />
+              )}
+            </div>
+            <button className="expandBtn" onClick={() => openImageViewer(0)}>
+              <img src={expandIcon} alt="Expand Icon" />
+            </button>
+          </div>
+        ) : message && message.label === "IMAGE_URL" ? (
+          <div className="menu-wrapper">
+            <div className="menu-options">
+              <span className="menu-option">
                 <img
-                  src={src}
-                  onClick={() => openImageViewer(index)}
+                  src={message.value}
+                  onClick={() => setIsViewerOpen(true)}
                   alt="Menu"
+                  height="200"
                 />
               </span>
-            ))}
-            {isViewerOpen && (
-              <ImageViewer
-                src={images}
-                currentIndex={currentImage}
-                onClose={closeImageViewer}
-                disableScroll={false}
-                backgroundStyle={{
-                  backgroundColor: "rgba(0,0,0,0.9)",
-                }}
-                closeOnClickOutside={true}
-              />
-            )}
+              {isViewerOpen && (
+                <ImageViewer
+                  src={message.value}
+                  onClose={() => {
+                    setIsViewerOpen(false);
+                  }}
+                  disableScroll={false}
+                  backgroundStyle={{
+                    backgroundColor: "rgba(0,0,0,0.9)",
+                  }}
+                  closeOnClickOutside={true}
+                />
+              )}
+            </div>
+            <button className="expandBtn" onClick={() => openImageViewer(0)}>
+              <img src={expandIcon} alt="Expand Icon" />
+            </button>
           </div>
-          <button className="expandBtn" onClick={() => openImageViewer(0)}>
-            <img src={expandIcon} alt="Expand Icon" />
-          </button>
-        </div>
-      ) : (
-        <> {isLoading ? <div className="dot-elastic"></div> : message} </>
-      )}
+        ) : message && message.label === "LIST" ? (
+          <ul className="options">
+            {message.value.map((value, index) => (
+              <li className="option" key={index}>
+                <div className="item">
+                  <span>{value.stringValue}</span>
+                </div>
+                <button className="btn addtBtn" onClick={() => onAddtoCart()}>
+                  Add
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          message && message.value
+        )}
+      </>
     </div>
   );
 }

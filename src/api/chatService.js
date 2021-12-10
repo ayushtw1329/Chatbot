@@ -56,9 +56,14 @@ export const getBotResponse = async (text) => {
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    // const messageType = handleRequest(data.message);
-    if (data.message && data.message.text && data.message.text.length) {
-      return data.message.text[0];
+    let finalResponse = { value: null, label: "" };
+    if (data.message && data.message.response && data.message.type) {
+      finalResponse.value =
+        data.message.type.stringValue === "LIST"
+          ? data.message.response.listValue.values
+          : data.message.response.stringValue;
+      finalResponse.label = data.message.type.stringValue;
+      return finalResponse;
     }
   } catch (error) {
     console.log("Error", error);

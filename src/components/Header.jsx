@@ -9,7 +9,7 @@ export default function Header({ count }) {
         {/* <div className="address">Order for address : Location 2</div> */}
         <div className="cart">
           <img src={cartIcon} alt="Cart" />
-          {count && <span className="count">{count}</span>}
+          {count ? <span className="count">{count}</span> : null}
         </div>
       </div>
     </header>

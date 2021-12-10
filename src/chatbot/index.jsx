@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import BotMessage from "../components/BotMessage";
 import UserMessage from "../components/UserMessage";
 import Messages from "../components/Messages";
@@ -10,6 +9,7 @@ import { getBotResponse } from "../api/chatService";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     async function loadWelcomeMessage() {
@@ -29,6 +29,7 @@ const Chatbot = () => {
       <BotMessage
         key={messages.length + 2}
         fetchMessage={async () => await getBotResponse(text)}
+        onAddtoCart={() => setCartCount((cartCount) => cartCount + 1)}
       />
     );
     setMessages(newMessages);
@@ -36,7 +37,7 @@ const Chatbot = () => {
 
   return (
     <>
-      <Header />
+      <Header count={cartCount} />
       <main className="wrapper">
         <Messages messages={messages} />
         <div className="sep"></div>
