@@ -57,7 +57,7 @@ export const getBotResponse = async (text) => {
     });
     const data = await res.json();
     let finalResponse = { value: null, label: "" };
-    if (data.message && data.message.response && data.message.type) {
+    if (data && data.message && data.message.response && data.message.type) {
       finalResponse.value =
         data.message.type.stringValue === "LIST"
           ? data.message.response.listValue.values
