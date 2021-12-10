@@ -79,35 +79,6 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
               <img src={expandIcon} alt="Expand Icon" />
             </button>
           </div>
-        ) : message && message.label === "IMAGE_URL" ? (
-          <div className="menu-wrapper">
-            <div className="menu-options">
-              <span className="menu-option">
-                <img
-                  src={message.value}
-                  onClick={() => setIsViewerOpen(true)}
-                  alt="Menu"
-                  height="200"
-                />
-              </span>
-              {isViewerOpen && (
-                <ImageViewer
-                  src={message.value}
-                  onClose={() => {
-                    setIsViewerOpen(false);
-                  }}
-                  disableScroll={false}
-                  backgroundStyle={{
-                    backgroundColor: "rgba(0,0,0,0.9)",
-                  }}
-                  closeOnClickOutside={true}
-                />
-              )}
-            </div>
-            <button className="expandBtn" onClick={() => openImageViewer(0)}>
-              <img src={expandIcon} alt="Expand Icon" />
-            </button>
-          </div>
         ) : message && message.label === "LIST" ? (
           <ul className="options">
             {message.value.map((value, index) => (
