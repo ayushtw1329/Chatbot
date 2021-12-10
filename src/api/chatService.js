@@ -64,6 +64,10 @@ export const getBotResponse = async (text) => {
           : data.message.response.stringValue;
       finalResponse.label = data.message.type.stringValue;
       return finalResponse;
+    } else {
+      finalResponse.label = "TEXT";
+      finalResponse.value =
+        "Sorry Artisan! I didn't get you. Could you repeat?";
     }
   } catch (error) {
     console.log("Error", error);

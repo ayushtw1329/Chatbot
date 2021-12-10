@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-import menu from "../images/menu.svg";
 import expandIcon from "../images/expand.svg";
 import ImageViewer from "react-simple-image-viewer";
 
@@ -10,13 +9,21 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
-  const images = [menu, menu, menu, menu];
+  const [menu, setMenu] = useState();
 
   useEffect(() => {
     async function loadMessage() {
       const msg = await fetchMessage();
       setLoading(false);
-      if (msg) {
+      if (
+        msg &&
+        (msg.label === "IMAGE_URL_LIST" || msg.label === "IMAGE_URL")
+      ) {
+        const arr = [];
+        [msg.value].map((value) => arr.push(value));
+        setMessage(msg);
+        setMenu(arr);
+      } else {
         setMessage(msg);
       }
     }
@@ -38,21 +45,26 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
       <>
         {isLoading ? (
           <div className="dot-elastic"></div>
-        ) : message && message.label === "IMAGE_URL_LIST" ? (
+        ) : message &&
+          (message.label === "IMAGE_URL_LIST" ||
+            message.label === "IMAGE_URL") ? (
           <div className="menu-wrapper">
             <div className="menu-options">
-              {images.map((src, index) => (
-                <span className="menu-option" key={index}>
-                  <img
-                    src={src}
-                    onClick={() => openImageViewer(index)}
-                    alt="Menu"
-                  />
-                </span>
-              ))}
+              {menu &&
+                menu.length &&
+                menu.map((src, index) => (
+                  <span className="menu-option" key={index}>
+                    <img
+                      src={src}
+                      onClick={() => openImageViewer(index)}
+                      alt="Menu"
+                      height="200"
+                    />
+                  </span>
+                ))}
               {isViewerOpen && (
                 <ImageViewer
-                  src={images}
+                  src={menu}
                   currentIndex={currentImage}
                   onClose={closeImageViewer}
                   disableScroll={false}
@@ -131,34 +143,4 @@ Here is a list of 3 Dominos near to your location
   </li>
 </ul>
 </div>
-<div className="message bot-message">
-<ul className="options">
-  <li className="option">
-    <div className="item">
-      <span>Choco Lava Cake</span>
-      <span className="text">
-        Lorem ipsum Lorem ipsum Lorem ipsum{" "}
-      </span>
-    </div>
-    <button className="btn addtBtn">Add</button>
-  </li>
-  <li className="option">
-    <div className="item">
-      <span>Choco Lava Cake</span>
-      <span className="text">
-        Lorem ipsum Lorem ipsum Lorem ipsum{" "}
-      </span>
-    </div>
-    <button className="btn addtBtn">Add</button>
-  </li>
-  <li className="option">
-    <div className="item">
-      <span>Choco Lava Cake</span>
-      <span className="text">
-        Lorem ipsum Lorem ipsum Lorem ipsum{" "}
-      </span>
-    </div>
-    <button className="btn addtBtn">Add</button>
-  </li>
-</ul>
-</div> */
+*/
