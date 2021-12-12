@@ -6,7 +6,7 @@ import { getTextFromAudio } from "../api/chatService";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
-  const [recordedAudio, setRecordedAudio] = useState("");
+  const [, setRecordedAudio] = useState("");
   const [showStopRecordingIcon, setShowStopRecordingIcon] = useState(false);
   const [showStartRecordingIcon, setShowStartRecordingIcon] = useState(true);
   const recorderRef = useRef();
