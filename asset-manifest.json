@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/Chatbot/static/css/main.8df4cde8.chunk.css",
+    "main.js": "/Chatbot/static/js/main.442c29b3.chunk.js",
+    "main.js.map": "/Chatbot/static/js/main.442c29b3.chunk.js.map",
+    "runtime-main.js": "/Chatbot/static/js/runtime-main.bde7d1ea.js",
+    "runtime-main.js.map": "/Chatbot/static/js/runtime-main.bde7d1ea.js.map",
+    "static/js/2.a4792b32.chunk.js": "/Chatbot/static/js/2.a4792b32.chunk.js",
+    "static/js/2.a4792b32.chunk.js.map": "/Chatbot/static/js/2.a4792b32.chunk.js.map",
+    "static/js/3.87da827e.chunk.js": "/Chatbot/static/js/3.87da827e.chunk.js",
+    "static/js/3.87da827e.chunk.js.map": "/Chatbot/static/js/3.87da827e.chunk.js.map",
+    "index.html": "/Chatbot/index.html",
+    "static/css/main.8df4cde8.chunk.css.map": "/Chatbot/static/css/main.8df4cde8.chunk.css.map",
+    "static/js/2.a4792b32.chunk.js.LICENSE.txt": "/Chatbot/static/js/2.a4792b32.chunk.js.LICENSE.txt",
+    "static/media/bot-icon.795fa940.svg": "/Chatbot/static/media/bot-icon.795fa940.svg",
+    "static/media/cart-icon.dc4fcdb7.svg": "/Chatbot/static/media/cart-icon.dc4fcdb7.svg",
+    "static/media/default_mic.5ed071ef.svg": "/Chatbot/static/media/default_mic.5ed071ef.svg",
+    "static/media/expand.49d5aa33.svg": "/Chatbot/static/media/expand.49d5aa33.svg",
+    "static/media/App.css": "/Chatbot/static/media/location-icon.2e5c50bd.svg",
+    "static/media/mic-icon.74710990.svg": "/Chatbot/static/media/mic-icon.74710990.svg",
+    "static/media/user-icon.20ebf0b4.svg": "/Chatbot/static/media/user-icon.20ebf0b4.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bde7d1ea.js",
+    "static/js/2.a4792b32.chunk.js",
+    "static/css/main.8df4cde8.chunk.css",
+    "static/js/main.442c29b3.chunk.js"
+  ]
+}
