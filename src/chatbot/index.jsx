@@ -9,6 +9,7 @@ import { getBotResponse } from "../api/chatService";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
+  const [latestMessage, setLatestMessage] = useState();
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const Chatbot = () => {
   }, []);
 
   const onSendMessage = async (text) => {
+    setLatestMessage(text);
     const newMessages = messages.concat(
       <UserMessage key={messages.length + 1} text={text} />,
       <BotMessage
@@ -39,7 +41,7 @@ const Chatbot = () => {
     <>
       <Header count={cartCount} />
       <main className="wrapper">
-        <Messages messages={messages} />
+        <Messages messages={messages} latestMessage={latestMessage} />
         <div className="sep"></div>
         <div className="chatFooter">
           <Input onSend={onSendMessage} />

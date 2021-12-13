@@ -2,19 +2,13 @@ import React, { useState, useRef } from "react";
 import activeMicIcon from "../images/mic-icon.svg";
 import defaultMicIcon from "../images/default_mic.svg";
 import RecordRTC, { StereoAudioRecorder } from "recordrtc";
-import {
-  getTextFromAudio,
-  getTextToSpeech,
-  getBotResponse,
-} from "../api/chatService";
+import { getTextFromAudio } from "../api/chatService";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
-  const [, setRecordedAudio] = useState("");
   const [showStopRecordingIcon, setShowStopRecordingIcon] = useState(false);
   const [showStartRecordingIcon, setShowStartRecordingIcon] = useState(true);
   const recorderRef = useRef();
-  let source = useRef();
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -25,38 +19,8 @@ const Input = ({ onSend }) => {
     if (text && text.length) {
       onSend(text);
       setText("");
-      await onHandleBotResponse();
     }
   };
-
-  const onHandleBotResponse = async () => {
-    const botResponse = await getBotResponse(text);
-    if (botResponse && botResponse.label === "TEXT") {
-      getTextAudio(botResponse.value);
-    }
-  };
-
-  const getTextAudio = async (text) => {
-    const res = await getTextToSpeech(text);
-    await onPlayTextAudio(res);
-  };
-
-  const onPlayTextAudio = async (res) => {
-    let context = new AudioContext();
-    source.current = context.createBufferSource();
-    const contextResponse = await context.decodeAudioData(res);
-    source.current.buffer = contextResponse;
-    source.current.connect(context.destination);
-    source.current.start(0);
-  };
-
-  // const onStopAutoPlayAudio = async () => {
-  //   try {
-  //     if (source.current) source.current.stop();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const recordAudio = async () => {
     try {
@@ -89,8 +53,6 @@ const Input = ({ onSend }) => {
     setShowStopRecordingIcon(false);
     setShowStartRecordingIcon(true);
     recorderRef.current.stopRecording(() => {
-      const audioURL = URL.createObjectURL(recorderRef.current.getBlob());
-      setRecordedAudio(audioURL);
       getAudioText(recorderRef.current.getBlob());
     });
   };
@@ -126,7 +88,6 @@ const Input = ({ onSend }) => {
           value={text}
           placeholder="Type Message"
         />
-        {/* <iframe src={recordedAudio} allow="autoplay" title="audio"></iframe> */}
       </form>
       {showStartRecordingIcon && (
         <button className="speak cursor-pointer" onClick={onStartRecording}>
