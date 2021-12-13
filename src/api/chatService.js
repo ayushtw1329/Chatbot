@@ -74,4 +74,18 @@ export const getBotResponse = async (text) => {
   }
 };
 
+export const getTextToSpeech = async (text) => {
+  try {
+    const res = await fetch(`http://localhost:3000/hear?lang=en&text=${text}`, {
+      method: "GET",
+      cors: "no-cors",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.arrayBuffer();
+    return data;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
 export default chatService;
