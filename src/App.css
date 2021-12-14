@@ -138,6 +138,7 @@ button {
 .play-icon {
   background: transparent;
   border: 0;
+  margin-top: 15px;
 }
 
 .text-center {
