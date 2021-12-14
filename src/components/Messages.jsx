@@ -34,6 +34,13 @@ export default function Messages({ messages, latestMessage }) {
               item.structValue.fields.price.stringValue;
           });
           return str;
+        } else if (response && response.label === "LOCATION_LIST") {
+          let str = "";
+          // eslint-disable-next-line array-callback-return
+          response.value.map((item) => {
+            str = str + " " + item.stringValue;
+          });
+          return str;
         }
       };
 
@@ -41,7 +48,9 @@ export default function Messages({ messages, latestMessage }) {
         const botResponse = await getBotResponse(latestMessage);
         if (
           botResponse &&
-          (botResponse.label === "TEXT" || botResponse.label === "LIST")
+          (botResponse.label === "TEXT" ||
+            botResponse.label === "LIST" ||
+            botResponse.label === "LOCATION_LIST")
         ) {
           const textMessage = getTextForm(botResponse);
           const res = await getTextToSpeech(textMessage);
