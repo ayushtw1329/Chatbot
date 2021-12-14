@@ -187,6 +187,7 @@ button {
 .item {
   display: flex;
   flex-direction: column;
+  width: 135px;
 }
 
 .text {

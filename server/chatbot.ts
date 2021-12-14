@@ -32,10 +32,10 @@ async function talkToChatbot(message: string) {
 
   const response = await sessionClient
     .detectIntent(botRequest)
-    .then((responses) => {
+    .then((responses: any) => {
       console.log(JSON.stringify(responses));
       const requiredResponse =
-        responses[0].queryResult.fulfillmentMessages[0].payload.fields;
+        responses[0].queryResult.fulfillmentMessages[0].payload.response;
       return requiredResponse;
     })
     .catch((error) => {

@@ -84,8 +84,9 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
             {message.value.map((value, index) => (
               <li className="option" key={index}>
                 <div className="item">
-                  <span>{value.stringValue}</span>
+                  <span>{value.structValue.fields.name.stringValue}</span>
                 </div>
+                <span>{value.structValue.fields.price.stringValue}</span>
                 <button className="btn addtBtn" onClick={() => onAddtoCart()}>
                   Add
                 </button>
