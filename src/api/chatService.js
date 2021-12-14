@@ -66,7 +66,7 @@ export const getBotResponse = async (text) => {
     } else {
       finalResponse.label = "TEXT";
       finalResponse.value =
-        "Sorry Artisan! I didn't get you. Could you please repeat?";
+        "Sorry Artisan! I didn't get you. Could you repeat or type your request?";
     }
     return finalResponse;
   } catch (error) {
@@ -85,7 +85,9 @@ export const getTextToSpeech = async (text) => {
       }
     );
     const data = await res.arrayBuffer();
-    return data;
+    if (data) {
+      return data;
+    }
   } catch (error) {
     console.log("Error", error);
   }

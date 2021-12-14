@@ -19,10 +19,27 @@ export default function Messages({ messages, latestMessage }) {
 
   useEffect(() => {
     if (latestMessage) {
+      const getTextForm = (response) => {
+        if (response && response.label === "TEXT") {
+          return response.value;
+        } else if (response && response.label === "LIST") {
+          let str = "";
+          // eslint-disable-next-line array-callback-return
+          response.value.map((item) => {
+            str = str + " " + item.stringValue;
+          });
+          return str;
+        }
+      };
+
       const onPlayTextAudio = async () => {
         const botResponse = await getBotResponse(latestMessage);
-        if (botResponse && botResponse.label === "TEXT") {
-          const res = await getTextToSpeech(botResponse.value);
+        if (
+          botResponse &&
+          (botResponse.label === "TEXT" || botResponse.label === "LIST")
+        ) {
+          const textMessage = getTextForm(botResponse);
+          const res = await getTextToSpeech(textMessage);
           var array = new Uint8Array(res);
           const blob = new Blob([array]);
           const audioURL = URL.createObjectURL(blob);
@@ -32,6 +49,8 @@ export default function Messages({ messages, latestMessage }) {
           setPauseAudio(false);
         }
       };
+      setPauseAudio(false);
+      setPlayAudio(false);
       onPlayTextAudio();
     }
   }, [audio, latestMessage]);
