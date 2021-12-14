@@ -66,7 +66,7 @@ export const getBotResponse = async (text) => {
     } else {
       finalResponse.label = "TEXT";
       finalResponse.value =
-        "Sorry Artisan! I didn't get you. Could you repeat or type your request?";
+        "I am Sorry! Won't be able to find result related to current query.Our developers working to improve me";
     }
     return finalResponse;
   } catch (error) {
