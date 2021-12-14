@@ -135,6 +135,15 @@ button {
   margin-top: 0;
 }
 
+.play-icon {
+  background: transparent;
+  border: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .user-message {
   border-radius: 16px 0 16px 16px;
   margin-left: auto;
