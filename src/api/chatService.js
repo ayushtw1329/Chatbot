@@ -71,7 +71,7 @@ export const getBotResponse = async (text) => {
     } else {
       finalResponse.label = "TEXT";
       finalResponse.value =
-        "I am sorry! Won't be able to find result related to current query. Our developers working to improve me";
+        "Sorry! Couldn't find the results related to the current query. Our developers are working to improve me.";
     }
     return finalResponse;
   } catch (error) {
