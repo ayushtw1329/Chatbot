@@ -32,7 +32,7 @@ export default function Messages({ messages, latestMessage }) {
           setPauseAudio(false);
         }
       };
-      // onPlayTextAudio();
+      onPlayTextAudio();
     }
   }, [audio, latestMessage]);
 

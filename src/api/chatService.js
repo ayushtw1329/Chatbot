@@ -47,7 +47,7 @@ export const getTextFromAudio = async (audioString) => {
 
 export const getBotResponse = async (text) => {
   try {
-    const res = await fetch("http://localhost:3000/chatbot", {
+    const res = await fetch("http://localhost:5000/chatbot", {
       method: "POST",
       cors: "no-cors",
       body: JSON.stringify({
@@ -76,7 +76,7 @@ export const getBotResponse = async (text) => {
 
 export const getTextToSpeech = async (text) => {
   try {
-    const res = await fetch(`http://localhost:3000/hear?lang=en&text=${text}`, {
+    const res = await fetch(`http://localhost:5000/hear?lang=en&text=${text}`, {
       method: "GET",
       cors: "no-cors",
       headers: { "Content-Type": "application/json" },
