@@ -47,7 +47,7 @@ export const getTextFromAudio = async (audioString) => {
 
 export const getBotResponse = async (text) => {
   try {
-    const res = await fetch("http://localhost:5000/chatbot", {
+    const res = await fetch("https://cbot1-api.herokuapp.com/chatbot", {
       method: "POST",
       cors: "no-cors",
       body: JSON.stringify({
@@ -76,11 +76,14 @@ export const getBotResponse = async (text) => {
 
 export const getTextToSpeech = async (text) => {
   try {
-    const res = await fetch(`http://localhost:5000/hear?lang=en&text=${text}`, {
-      method: "GET",
-      cors: "no-cors",
-      headers: { "Content-Type": "application/json" },
-    });
+    const res = await fetch(
+      `https://cbot1-api.herokuapp.com/hear?lang=en&text=${text}`,
+      {
+        method: "GET",
+        cors: "no-cors",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     const data = await res.arrayBuffer();
     return data;
   } catch (error) {
