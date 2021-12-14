@@ -26,7 +26,12 @@ export default function Messages({ messages, latestMessage }) {
           let str = "";
           // eslint-disable-next-line array-callback-return
           response.value.map((item) => {
-            str = str + " " + item.structValue.fields.name.stringValue;
+            str =
+              str +
+              " " +
+              item.structValue.fields.name.stringValue +
+              " " +
+              item.structValue.fields.price.stringValue;
           });
           return str;
         }
