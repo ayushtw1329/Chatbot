@@ -1,8 +1,10 @@
 import React, { useState, useRef } from "react";
 import activeMicIcon from "../images/mic-icon.svg";
 import defaultMicIcon from "../images/default_mic.svg";
-import RecordRTC, { StereoAudioRecorder } from "recordrtc";
-import { StreamingClient, SocketStatus } from '@project-sunbird/open-speech-streaming-client';
+import {
+  StreamingClient,
+  SocketStatus,
+} from "@project-sunbird/open-speech-streaming-client";
 import { getTextFromAudio } from "../api/chatService";
 
 const Input = ({ onSend }) => {
@@ -26,27 +28,33 @@ const Input = ({ onSend }) => {
   const recordAudio = async () => {
     try {
       recorderRef.current = new StreamingClient();
-      recorderRef.current.connect('https://meity-dev-asr.ulcacontrib.org', 'en', function (action, id) {
-        if (action === SocketStatus.CONNECTED) {
-
-          recorderRef.current.startStreaming(function (transcript) {
-            // transcript will give you the text which can be used further
-            console.log('transcript:', transcript);
-            setText(transcript);
-          }, (e) => {
-            console.log("I got error", e);
-          })
-        } else if (action === SocketStatus.TERMINATED) {
-          // recorderRef.current.punctuateText('Text to punctuate', '<inferencing-server-url>', (status, text) => {
-          //   console.log("Punctuted Text:", text);
-          // }, (status, error) => {
-          //   console.log("Failed to punctuate", status, error);
-          // });
-        } else {
-          //unexpected failures action on connect.
-          console.log("Action", action, id);
+      recorderRef.current.connect(
+        "https://meity-dev-asr.ulcacontrib.org",
+        "en",
+        function (action, id) {
+          if (action === SocketStatus.CONNECTED) {
+            recorderRef.current.startStreaming(
+              function (transcript) {
+                // transcript will give you the text which can be used further
+                console.log("transcript:", transcript);
+                setText(transcript);
+              },
+              (e) => {
+                console.log("I got error", e);
+              }
+            );
+          } else if (action === SocketStatus.TERMINATED) {
+            // recorderRef.current.punctuateText('Text to punctuate', '<inferencing-server-url>', (status, text) => {
+            //   console.log("Punctuted Text:", text);
+            // }, (status, error) => {
+            //   console.log("Failed to punctuate", status, error);
+            // });
+          } else {
+            //unexpected failures action on connect.
+            console.log("Action", action, id);
+          }
         }
-      })
+      );
       // const mediaStream = await navigator.mediaDevices.getUserMedia({
       //   video: false,
       //   audio: true,
@@ -78,9 +86,7 @@ const Input = ({ onSend }) => {
     // recorderRef.current.stopRecording(() => {
     //   getAudioText(recorderRef.current.getBlob());
     // });
-    recorderRef.current.stopStreaming((blob) => {
-
-    });
+    recorderRef.current.stopStreaming((blob) => {});
   };
 
   const blobToBase64 = (blob) => {

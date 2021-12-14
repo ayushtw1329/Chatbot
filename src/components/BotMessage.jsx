@@ -15,12 +15,13 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
     async function loadMessage() {
       const msg = await fetchMessage();
       setLoading(false);
-      if (
-        msg &&
-        (msg.label === "IMAGE_URL_LIST" || msg.label === "IMAGE_URL")
-      ) {
+      if (msg && (msg.label === "IMAGE_LIST" || msg.label === "IMAGE_URL")) {
         const arr = [];
-        [msg.value].map((value) => arr.push(value));
+        if (msg.label === "IMAGE_LIST") {
+          msg.value.map((value) => arr.push(value.stringValue));
+        } else {
+          [msg.value].map((value) => arr.push(value));
+        }
         setMessage(msg);
         setMenu(arr);
       } else {
@@ -46,8 +47,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
         {isLoading ? (
           <div className="dot-elastic"></div>
         ) : message &&
-          (message.label === "IMAGE_URL_LIST" ||
-            message.label === "IMAGE_URL") ? (
+          (message.label === "IMAGE_LIST" || message.label === "IMAGE_URL") ? (
           <div className="menu-wrapper">
             <div className="menu-options">
               {menu &&
@@ -59,6 +59,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
                       onClick={() => openImageViewer(index)}
                       alt="Menu"
                       height="200"
+                      width="120"
                     />
                   </span>
                 ))}
@@ -90,6 +91,14 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
                 <button className="btn addtBtn" onClick={() => onAddtoCart()}>
                   Add
                 </button>
+              </li>
+            ))}
+          </ul>
+        ) : message && message.label === "LOCATION_LIST" ? (
+          <ul className="locations">
+            {message.value.map((value, index) => (
+              <li className="location" key={index}>
+                <a href="#">{value.stringValue}</a>
               </li>
             ))}
           </ul>

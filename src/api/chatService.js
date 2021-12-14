@@ -59,14 +59,19 @@ export const getBotResponse = async (text) => {
     let finalResponse = { value: null, label: "" };
     if (data && data.message && data.message.response && data.message.type) {
       finalResponse.value =
-        data.message.type.stringValue === "LIST"
+        data.message.type.stringValue === "LIST" ||
+        data.message.type.stringValue === "IMAGE_LIST"
           ? data.message.response.listValue.values
           : data.message.response.stringValue;
-      finalResponse.label = data.message.type.stringValue;
+      finalResponse.label =
+        data.message.type.stringValue === "LIST" &&
+        data.message.response.listValue.values[0].stringValue
+          ? "LOCATION_LIST"
+          : data.message.type.stringValue;
     } else {
       finalResponse.label = "TEXT";
       finalResponse.value =
-        "I am Sorry! Won't be able to find result related to current query.Our developers working to improve me";
+        "I am sorry! Won't be able to find result related to current query. Our developers working to improve me";
     }
     return finalResponse;
   } catch (error) {
