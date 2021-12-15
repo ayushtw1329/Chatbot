@@ -22,7 +22,7 @@ export default function Messages({ messages, latestMessage }) {
       const getTextForm = (response) => {
         if (response && response.label === "TEXT") {
           return response.value;
-        } else if (response && response.label === "LIST") {
+        } else if (response && response.label === "OBJECT_LIST") {
           let str = "";
           // eslint-disable-next-line array-callback-return
           response.value.map((item) => {
@@ -34,7 +34,7 @@ export default function Messages({ messages, latestMessage }) {
               item.structValue.fields.price.stringValue;
           });
           return str;
-        } else if (response && response.label === "LOCATION_LIST") {
+        } else if (response && response.label === "STRING_LIST") {
           let str = "";
           // eslint-disable-next-line array-callback-return
           response.value.map((item) => {
@@ -49,8 +49,8 @@ export default function Messages({ messages, latestMessage }) {
         if (
           botResponse &&
           (botResponse.label === "TEXT" ||
-            botResponse.label === "LIST" ||
-            botResponse.label === "LOCATION_LIST")
+            botResponse.label === "OBJECT_LIST" ||
+            botResponse.label === "STRING_LIST")
         ) {
           const textMessage = getTextForm(botResponse);
           const res = await getTextToSpeech(textMessage);
@@ -61,10 +61,13 @@ export default function Messages({ messages, latestMessage }) {
           audio?.play();
           setPlayAudio(true);
           setPauseAudio(false);
+        } else {
+          audio?.pause();
         }
       };
       setPauseAudio(false);
       setPlayAudio(false);
+      audio?.pause();
       onPlayTextAudio();
     }
   }, [audio, latestMessage]);

@@ -80,7 +80,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
               <img src={expandIcon} alt="Expand Icon" />
             </button>
           </div>
-        ) : message && message.label === "LIST" ? (
+        ) : message && message.label === "OBJECT_LIST" ? (
           <ul className="options">
             {message.value.map((value, index) => (
               <li className="option" key={index}>
@@ -94,7 +94,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
               </li>
             ))}
           </ul>
-        ) : message && message.label === "LOCATION_LIST" ? (
+        ) : message && message.label === "STRING_LIST" ? (
           <ul className="locations">
             {message.value.map((value, index) => (
               <li className="location" key={index}>

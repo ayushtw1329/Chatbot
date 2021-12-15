@@ -59,15 +59,12 @@ export const getBotResponse = async (text) => {
     let finalResponse = { value: null, label: "" };
     if (data && data.message && data.message.response && data.message.type) {
       finalResponse.value =
-        data.message.type.stringValue === "LIST" ||
+        data.message.type.stringValue === "OBJECT_LIST" ||
+        data.message.type.stringValue === "STRING_LIST" ||
         data.message.type.stringValue === "IMAGE_LIST"
           ? data.message.response.listValue.values
           : data.message.response.stringValue;
-      finalResponse.label =
-        data.message.type.stringValue === "LIST" &&
-        data.message.response.listValue.values[0].stringValue
-          ? "LOCATION_LIST"
-          : data.message.type.stringValue;
+      finalResponse.label = data.message.type.stringValue;
     } else {
       finalResponse.label = "TEXT";
       finalResponse.value =
