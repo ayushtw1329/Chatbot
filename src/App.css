@@ -153,10 +153,13 @@ button {
 
 .bot-message {
   border-radius: 0 16px 16px 16px;
-  /* min-height: 18px;
-  overflow-y: auto; */
   margin-right: auto;
-  /* max-height: 200px; */
+}
+
+.menu-img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 .locations {

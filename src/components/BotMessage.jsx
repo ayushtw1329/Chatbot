@@ -55,11 +55,12 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
                 menu.map((src, index) => (
                   <span className="menu-option" key={index}>
                     <img
+                      className="menu-img"
                       src={src}
                       onClick={() => openImageViewer(index)}
                       alt="Menu"
                       height="200"
-                      width="160"
+                      width="180"
                     />
                   </span>
                 ))}
