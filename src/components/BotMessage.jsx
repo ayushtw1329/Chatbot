@@ -59,7 +59,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
                       onClick={() => openImageViewer(index)}
                       alt="Menu"
                       height="200"
-                      width="120"
+                      width="160"
                     />
                   </span>
                 ))}
