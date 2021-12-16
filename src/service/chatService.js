@@ -79,7 +79,7 @@ export const getBotResponse = async (text) => {
 export const getTextToSpeech = async (text, countryLan) => {
   try {
     const res = await fetch(
-      `https://cbot1-api.herokuapp.com/hear?lang=en&text=${text}&tld=${countryLan}`,
+      `https://cbot1-api.herokuapp.com/hear?lang=hi&text=${text}&tld=${countryLan}`,
       {
         method: "GET",
         cors: "no-cors",
