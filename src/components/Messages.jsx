@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import botIcon from "../images/bot-icon.svg";
 import userIcon from "../images/user-icon.svg";
-import { getTextToSpeech, getBotResponse } from "../api/chatService";
+import { getTextToSpeech, getBotResponse } from "../service/chatService";
 import playIcon from "../images/play.svg";
 import pauseIcon from "../images/pause.svg";
 
