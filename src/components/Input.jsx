@@ -5,7 +5,6 @@ import {
   StreamingClient,
   SocketStatus,
 } from "@project-sunbird/open-speech-streaming-client";
-import { getTextFromAudio } from "../api/chatService";
 
 const Input = ({ onSend }) => {
   const [text, setText] = useState("");
@@ -89,26 +88,26 @@ const Input = ({ onSend }) => {
     recorderRef.current.stopStreaming((blob) => {});
   };
 
-  const blobToBase64 = (blob) => {
-    return new Promise((resolve, _) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
-  };
+  // const blobToBase64 = (blob) => {
+  //   return new Promise((resolve, _) => {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => resolve(reader.result);
+  //     reader.readAsDataURL(blob);
+  //   });
+  // };
 
-  const getAudioText = async (blob) => {
-    const base64 = await blobToBase64(blob);
-    const splittedValue = base64.split(",")[1];
-    try {
-      const data = await getTextFromAudio(splittedValue);
-      if (data && data.output && data.output.length) {
-        setText(data.output[0].source);
-      }
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
+  // const getAudioText = async (blob) => {
+  //   const base64 = await blobToBase64(blob);
+  //   const splittedValue = base64.split(",")[1];
+  //   try {
+  //     const data = await getTextFromAudio(splittedValue);
+  //     if (data && data.output && data.output.length) {
+  //       setText(data.output[0].source);
+  //     }
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // };
 
   return (
     <>

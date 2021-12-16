@@ -10,6 +10,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   const [menu, setMenu] = useState();
+  const [menuThumbnail, setMenuThumbnail] = useState();
 
   useEffect(() => {
     async function loadMessage() {
@@ -17,13 +18,27 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
       setLoading(false);
       if (msg && (msg.label === "IMAGE_LIST" || msg.label === "IMAGE_URL")) {
         const arr = [];
+        const menuThumbnail = [];
         if (msg.label === "IMAGE_LIST") {
-          msg.value.map((value) => arr.push(value.stringValue));
+          // eslint-disable-next-line array-callback-return
+          msg.value.map((value) => {
+            if (value && value.structValue) {
+              arr.push(value.structValue.fields.image_url.stringValue);
+              menuThumbnail.push(
+                value.structValue.fields.thumbnail_url.stringValue
+              );
+            }
+          });
         } else {
-          [msg.value].map((value) => arr.push(value));
+          // eslint-disable-next-line array-callback-return
+          [msg.value].map((value) => {
+            arr.push(value);
+            menuThumbnail.push(value);
+          });
         }
         setMessage(msg);
         setMenu(arr);
+        setMenuThumbnail(menuThumbnail);
       } else {
         setMessage(msg);
       }
@@ -50,20 +65,20 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
           (message.label === "IMAGE_LIST" || message.label === "IMAGE_URL") ? (
           <div className="menu-wrapper">
             <div className="menu-options">
-              {menu &&
-                menu.length &&
-                menu.map((src, index) => (
-                  <span className="menu-option" key={index}>
-                    <img
-                      className="menu-img"
-                      src={src}
-                      onClick={() => openImageViewer(index)}
-                      alt="Menu"
-                      height="200"
-                      width="180"
-                    />
-                  </span>
-                ))}
+              {menuThumbnail && menuThumbnail.length
+                ? menuThumbnail.map((src, index) => (
+                    <span className="menu-option" key={index}>
+                      <img
+                        className="menu-img"
+                        src={src}
+                        onClick={() => openImageViewer(index)}
+                        alt="Menu"
+                        height="200"
+                        width="180"
+                      />
+                    </span>
+                  ))
+                : null}
               {isViewerOpen && (
                 <ImageViewer
                   src={menu}
@@ -99,6 +114,7 @@ export default function BotMessage({ fetchMessage, onAddtoCart = () => {} }) {
           <ul className="locations">
             {message.value.map((value, index) => (
               <li className="location" key={index}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#">{value.stringValue}</a>
               </li>
             ))}
