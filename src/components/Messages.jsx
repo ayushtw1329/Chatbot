@@ -53,7 +53,7 @@ export default function Messages({ messages, latestMessage }) {
             botResponse.label === "STRING_LIST")
         ) {
           const textMessage = getTextForm(botResponse);
-          const res = await getTextToSpeech(textMessage);
+          const res = await getTextToSpeech(textMessage, "co-in");
           var array = new Uint8Array(res);
           const blob = new Blob([array]);
           const audioURL = URL.createObjectURL(blob);
