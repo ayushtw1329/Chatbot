@@ -31,7 +31,8 @@ export default function Messages({ messages, latestMessage }) {
               " " +
               item.structValue.fields.name.stringValue +
               " " +
-              item.structValue.fields.price.stringValue;
+              item.structValue.fields.price.stringValue +
+              ".";
           });
           return str;
         } else if (response && response.label === "STRING_LIST") {
@@ -53,6 +54,7 @@ export default function Messages({ messages, latestMessage }) {
             botResponse.label === "STRING_LIST")
         ) {
           const textMessage = getTextForm(botResponse);
+          console.log(textMessage);
           const res = await getTextToSpeech(textMessage, "co.in");
           var array = new Uint8Array(res);
           const blob = new Blob([array]);
